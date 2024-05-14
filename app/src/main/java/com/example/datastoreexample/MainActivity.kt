@@ -3,6 +3,7 @@ package com.example.datastoreexample
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -27,9 +28,9 @@ class MainActivity : AppCompatActivity() {
                 lifecycleScope.launch {
                     lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                         dataStoreManager.myDatastoreWrite(NAME_KEY, binding.someThingText.text.toString())
+                        binding.someThingText.text.clear()
                     }
                 }
-
             }
         }
 
@@ -37,7 +38,7 @@ class MainActivity : AppCompatActivity() {
             lifecycleScope.launch {
                 lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                     dataStoreManager.myDatastoreRead(NAME_KEY).collect {
-                        Log.i("Gelen text", it)
+                       Toast.makeText(this@MainActivity, it, Toast.LENGTH_SHORT).show()
                     }
                 }
             }
